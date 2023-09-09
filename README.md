@@ -20,8 +20,13 @@
 ![Downloads](https://img.shields.io/github/downloads/stojchevskiboris/reservations/total) ![Contributors](https://img.shields.io/github/contributors/stojchevskiboris/reservations?color=dark-green) ![Issues](https://img.shields.io/github/issues/stojchevskiboris/reservations) ![License](https://img.shields.io/github/license/stojchevskiboris/reservations) 
 
 ## About The Project
+<h1>Screen 1</h1>
 
 ![Screen Shot 1](data/static/sc1.png)
+
+<br><br><br>
+
+<h1>Screen 2</h1>
 
 ![Screen Shot 2](data/static/sc2.png)
 

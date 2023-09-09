@@ -13,7 +13,7 @@
     <a href="https://www.djangoproject.com/"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
-    <a href="https://github.com/stojchevskiboris/reservations">View Demo</a>
+    <a href="https://otesevo.pythonanywhere.com/"><strong>Open Web-App »</strong></a>
   </p>
 </p>
 

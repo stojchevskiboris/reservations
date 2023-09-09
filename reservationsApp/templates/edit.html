@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Измени резервација</h1>
+    <form id="form1" action="{% url 'edit' reservation_id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            <label for="id_guestName">Име и презиме:</label>
+            <input value="{{ reservation.guestName }}" type="text" name="guestName" maxlength="100" class="form-control"
+                   required id="id_guestName">
+        </p>
+
+        <p>
+            <label for="id_numGuests">Број на гости:</label>
+            <input value="{{ reservation.numGuests }}" type="text" name="numGuests" class="form-control"
+                   id="id_numGuests">
+        </p>
+
+        <p>
+            <label for="id_guestPhone">Тел. број:</label>
+            <input value="{{ reservation.guestPhone }}" type="text" name="guestPhone" maxlength="20"
+                   class="form-control" id="id_guestPhone">
+        </p>
+
+        <p>
+            <label for="id_guestEmail">E-mail адреса:</label>
+            <input value="{{ reservation.guestEmail }}" type="text" name="guestEmail" maxlength="100"
+                   class="form-control" id="id_guestEmail">
+        </p>
+
+        <p>
+            <label for="id_dateFrom">Датум од: ({{ reservation.dateFrom|date:"d-m-Y" }})</label>
+            <input value="{{ reservation.dateFrom|date:"Y-m-d" }}" type="date" onfocus="this.showPicker()"
+                   name="dateFrom" class="form-control" id="id_dateFrom" required>
+        </p>
+
+        <p>
+            <label for="id_dateTo">Датум до: ({{ reservation.dateTo|date:"d-m-Y" }})</label>
+            <input value="{{ reservation.dateTo|date:"Y-m-d" }}" type="date" onfocus="this.showPicker()" name="dateTo"
+                   class="form-control" id="id_dateTo" required>
+        </p>
+
+        <p>
+            <label for="id_type">Престој во:</label>
+            <select onchange="changeFc()" name="type" class="form-control" id="id_type" required>
+                <option value="Bungalov" selected="">Бунгалов</option>
+                <option value="Prikolka">Приколка</option>
+                <option value="Shator">Шатор</option>
+            </select>
+        </p>
+
+        <p id="numField">
+            <label for="id_bNumber">Бунгалов бр:</label>
+            <input value="{{ reservation.bNumber }}" type="text" name="bNumber" class="form-control" id="id_bNumber">
+        </p>
+
+        <p>
+            <label for="id_resDetails">Информации за резервација:</label>
+            <textarea name="resDetails" cols="40" rows="10" class="form-control"
+                      id="id_resDetails">{{ reservation.resDetails }}</textarea>
+        </p>
+
+        <p>
+            <label for="id_image">Слика (за уплата):</label>
+            <input type="file" name="image" accept="image/*" class="form-control" id="id_image">
+        </p>
+        {% if reservation.image %}
+            <img width="700px" class="imgList" src="{{ MEDIA_URL }}{{ reservation.image.url }}" alt="Card image cap">
+        {% endif %}
+
+
+        <p>
+            <label for="id_status">Статус на резервација:</label>
+            <select name="status" class="form-control" id="id_status">
+                <option value="Avansirana">Авансирана</option>
+                <option value="Zavrshena">Завршена</option>
+                <option value="Nova">Нова</option>
+                <option value="Prioritetna">Приоритетна</option>
+                <option value="Vo tek">Во тек</option>
+            </select>
+        </p>
+        <button class="btn btn-success">Зачувај</button>
+        <a class="btn btn-danger float-end" style="display: inline-block" href="{% url 'list' %}">Откажи</a>
+    </form>
+    <script>
+        function changeFc() {
+            var type = document.getElementById("id_type").value
+            if (type == 'Bungalov') {
+                document.getElementById("numField").style.display = 'block'
+            } else {
+                document.getElementById("numField").style.display = 'none'
+                document.getElementById("id_bNumber").value = ""
+
+            }
+        }
+
+        var status = '{{ reservation.status }}'
+        const $select = document.querySelector('#id_status');
+        $select.value = status
+
+        var type = '{{ reservation.type }}'
+        const $select2 = document.querySelector('#id_type');
+        $select2.value = type
+
+        if (document.getElementById('id_guestEmail').value === 'None')
+            document.getElementById('id_guestEmail').value = ''
+        if (document.getElementById('id_guestPhone').value === 'None')
+            document.getElementById('id_guestPhone').value = ''
+
+        Date.prototype.addDays = function (days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+
+        var today = new Date();
+
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        // $('#id_dateFrom').attr('min', today);
+        // $('#id_dateTo').attr('min', today);
+
+        $("#id_dateFrom").change(function () {
+            $("#id_dateTo").val("")
+            var dtP = $("#id_dateFrom").val()
+
+            var dd = String(dtP).slice(8, 10)
+            var mm = String(dtP).slice(5, 7)
+            var yyyy = String(dtP).slice(0, 4)
+
+
+            var minZdate = new Date(yyyy, mm - 1, dd)
+            minZdate = minZdate.addDays(1)
+
+
+            var Tdd = String(minZdate.getDate()).padStart(2, '0');
+            var Tmm = String(minZdate.getMonth() + 1).padStart(2, '0');
+            var Tyyyy = minZdate.getFullYear();
+
+            minZdate = Tyyyy + '-' + Tmm + '-' + Tdd;
+
+            $('#id_dateTo').attr('min', minZdate);
+        })
+        changeFc()
+    </script>
+
+{% endblock %}

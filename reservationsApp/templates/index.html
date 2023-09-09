@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Автокамп Отешево</h1>
+    <p>Систем за управување со резервации</p>
+
+    {% if not user.is_authenticated %}
+        <h3>Ве молиме најавете се</h3>
+    {% else %}
+        <a class="btn btn-success m-1" href="{% url 'add' %}">Нова резервација</a>
+        <a class="btn btn-primary m-1" href="{% url 'list' %}">Сите резервации</a>
+        <br><br>
+
+        <div id="pregled">
+            <h2>Преглед за наредните 3 дена - Бунгалови</h2>
+            <hr>
+
+            <h4 id="day0">{{ d0|date:"d.m.Y" }} - Денес</h4>
+            {% if not d0come.count == 0 %}
+                <h6>Доаѓаат:</h6>
+                <ul>
+                    {% for d0c in d0come %}
+                        <li>Б{{ d0c.bNumber }}, {{ d0c.guestName }} (до {{ d0c.dateTo|date:"d.m.Y" }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не доаѓаат гости на овој датум</h6>
+            {% endif %}
+            {% if not d0go.count == 0 %}
+                <h6>Заминуваат:</h6>
+                <ul>
+                    {% for d0g in d0go %}
+                        <li>Б{{ d0g.bNumber }}, {{ d0g.guestName }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не заминуваат гости на овој датум</h6>
+            {% endif %}
+            <hr>
+
+            <h4 id="day1">{{ d1|date:"d.m.Y" }} - Утре</h4>
+            {% if not d1come.count == 0 %}
+                <h6>Доаѓаат:</h6>
+                <ul>
+                    {% for d1c in d1come %}
+                        <li>Б{{ d1c.bNumber }}, {{ d1c.guestName }} (до {{ d1c.dateTo|date:"d.m.Y" }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не доаѓаат гости на овој датум</h6>
+            {% endif %}
+            {% if not d1go.count == 0 %}
+                <h6>Заминуваат:</h6>
+                <ul>
+                    {% for d1g in d1go %}
+                        <li>Б{{ d1g.bNumber }}, {{ d1g.guestName }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не заминуваат гости на овој датум</h6>
+            {% endif %}
+            <hr>
+
+            <h4 id="day2">{{ d2|date:"d.m.Y" }}</h4>
+            {% if not d2come.count == 0 %}
+                <h6>Доаѓаат:</h6>
+                <ul>
+                    {% for d2c in d2come %}
+                        <li>Б{{ d2c.bNumber }}, {{ d2c.guestName }} (до {{ d2c.dateTo|date:"d.m.Y" }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не доаѓаат гости на овој датум</h6>
+            {% endif %}
+            {% if not d2go.count == 0 %}
+                <h6>Заминуваат:</h6>
+                <ul>
+                    {% for d2g in d2go %}
+                        <li>Б{{ d2g.bNumber }}, {{ d2g.guestName }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не заминуваат гости на овој датум</h6>
+            {% endif %}
+            <hr>
+
+            <h4 id="day3">{{ d3|date:"d.m.Y" }}</h4>
+            {% if not d3come.count == 0 %}
+                <h6>Доаѓаат:</h6>
+                <ul>
+                    {% for d3c in d3come %}
+                        <li>Б{{ d3c.bNumber }}, {{ d3c.guestName }} (до {{ d3c.dateTo|date:"d.m.Y" }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не доаѓаат гости на овој датум</h6>
+            {% endif %}
+            {% if not d3go.count == 0 %}
+                <h6>Заминуваат:</h6>
+                <ul>
+                    {% for d3g in d3go %}
+                        <li>Б{{ d3g.bNumber }}, {{ d3g.guestName }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h6>Не заминуваат гости на овој датум</h6>
+            {% endif %}
+
+
+        </div>
+    {% endif %}
+
+    <br>
+    <hr>
+    <img class="indexImg" src="/data/static/Logo.png">
+{% endblock %}

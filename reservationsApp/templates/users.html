@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Регистрирани корисници на системот</h1>
+    <br>
+    {% for u in users %}
+        <h2>
+            <img width="50px" src="/data/static/user.png">
+            <u>{{ u }}</u>
+
+        </h2>
+        <br>
+    {% endfor %}
+{% endblock %}

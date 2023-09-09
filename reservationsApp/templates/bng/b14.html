@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 style="padding-bottom: 10px">Сите резервации</h1>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b6' %}">Б6</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b7' %}">Б7</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b8' %}">Б8</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b9' %}">Б9</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b10' %}">Б10</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b11' %}">Б11</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b12' %}">Б12</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b13' %}">Б13</a>
+    <a class="btn btn-secondary m-1" href="{% url 'b14' %}">Б14</a>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b15' %}">Б15</a>
+    <br>
+    <a class="btn btn-outline-secondary-custom m-1" href="{% url 'list' %}">Сите резервации</a>
+    <a class="btn btn-success m-1" href="{% url 'add' %}">Нова резервација</a>
+    <hr>
+    {% for r in allReservations %}
+        <div class="listItem">
+            <span class="resStatus">Статус: {{ r.status }}</span>
+            <br>
+            <span class="resName">{{ r.guestName }}</span>
+            {% if r.guestPhone %}
+                <span class="resPhone"><img src="/data/static/phone.png" width="40px"> <a
+                        href="tel:{{ r.guestPhone }}">{{ r.guestPhone }}</a></span>
+            {% endif %}
+            <br>
+            {% if r.guestEmail %}
+                <span class="resEmail"><img src="/data/static/mail.png" width="40px"> <a
+                        href="mailto:{{ r.guestEmail }}">{{ r.guestEmail }}</a> </span>
+                <br>
+            {% endif %}
+            <span class="dateFrom">{{ r.dateFrom|date:"d.m.Y" }}</span>
+            <span> - </span>
+            <span class="dateTo">{{ r.dateTo|date:"d.m.Y" }}</span>
+            <br>
+            <span class="resType">Престој во: {{ r.type }}</span>
+            <span class="resNum">({{ r.numGuests }} лица)</span>
+            <br>
+            {% if r.type == 'Bungalov' %}
+                <span><b>Бунгалов број: {{ r.bNumber }}</b></span>
+                <br>
+            {% endif %}
+            <span class="resInfo">{{ r.resDetails }}</span>
+            <br>
+            {% if r.image %}
+                <img width="700px" class="imgList" src="{{ MEDIA_URL }}{{ r.image.url }}" alt="Card image cap">
+            {% endif %}
+            <br>
+            <form style="display: inline-block;" action="{% url 'edit' r.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-warning" type="submit">Измени</button>
+            </form>
+            <form onsubmit="return confirm('Избриши ја резервацијата?');" style="display: inline-block;" action="{% url 'delete' r.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Избриши</button>
+            </form>
+            <br>
+            <span class="madeBy">Последна измена од: <u>{{ r.madeBy }}</u>, {{ r.dateOfReservation }}</span>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

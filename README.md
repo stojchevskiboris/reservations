@@ -13,15 +13,20 @@
     <a href="https://www.djangoproject.com/"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
-    <a href="https://github.com/stojchevskiboris/reservations">View Demo</a>
+    <a href="https://otesevo.pythonanywhere.com/"><strong>Open Web-App »</strong></a>
   </p>
 </p>
 
 ![Downloads](https://img.shields.io/github/downloads/stojchevskiboris/reservations/total) ![Contributors](https://img.shields.io/github/contributors/stojchevskiboris/reservations?color=dark-green) ![Issues](https://img.shields.io/github/issues/stojchevskiboris/reservations) ![License](https://img.shields.io/github/license/stojchevskiboris/reservations) 
 
 ## About The Project
+<h1>Screen 1</h1>
 
 ![Screen Shot 1](data/static/sc1.png)
+
+<br><br><br>
+
+<h1>Screen 2</h1>
 
 ![Screen Shot 2](data/static/sc2.png)
 

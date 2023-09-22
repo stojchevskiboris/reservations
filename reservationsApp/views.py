@@ -68,6 +68,13 @@ def add(request):
 
 @login_required
 def list(request):
+    today = date.today()
+    # print(today)
+    oldReservations = Reservation.objects.filter(dateTo__lt=today).order_by('dateFrom')
+    for obj in oldReservations:
+        obj.status = "Zavrshena"
+        obj.save()
+    # print(oldReservations)
     allReservations = Reservation.objects.filter(~Q(status='Zavrshena')).order_by('dateFrom')
     context = {"allReservations": allReservations}
     return render(request, 'list.html', context)

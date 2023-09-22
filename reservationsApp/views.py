@@ -5,6 +5,7 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
 from .forms import ReservationForm
 from datetime import date, timedelta
+from django.db.models import Q
 
 
 def index(request):
@@ -24,13 +25,13 @@ def index(request):
                "d1come": d1come, "d1go": d1go,
                "d2come": d2come, "d2go": d2go,
                "d3come": d3come, "d3go": d3go,
-               "d0": d0, "d1": d1, "d2": d2, "d3": d3,}
-    print(len(d1come))
-    print(d1go)
-    print(d2come)
-    print(d2go)
-    print(d3come)
-    print(d3)
+               "d0": d0, "d1": d1, "d2": d2, "d3": d3, }
+    # print(len(d1come))
+    # print(d1go)
+    # print(d2come)
+    # print(d2go)
+    # print(d3come)
+    # print(d3)
     return render(request, 'index.html', context)
 
 
@@ -67,8 +68,15 @@ def add(request):
 
 @login_required
 def list(request):
-    allReservations = Reservation.objects.all().order_by('dateFrom')
+    allReservations = Reservation.objects.filter(~Q(status='Zavrshena')).order_by('dateFrom')
     context = {"allReservations": allReservations}
+    return render(request, 'list.html', context)
+
+
+@login_required
+def finished(request):
+    allReservations = Reservation.objects.filter(status='Zavrshena').order_by('dateFrom')
+    context = {"allReservations": allReservations, "finished": True}
     return render(request, 'list.html', context)
 
 

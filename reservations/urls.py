@@ -33,6 +33,7 @@ urlpatterns = [
     path("<int:reservation_id>/delete/", views.delete, name="delete"),
     path("<int:reservation_id>/edit/", views.edit, name="edit"),
     path('users/', views.users, name="users"),
+    path('list/finished', views.finished, name="finished"),
     path('list/b6', views.b6, name="b6"),
     path('list/b7', views.b7, name="b7"),
     path('list/b8', views.b8, name="b8"),

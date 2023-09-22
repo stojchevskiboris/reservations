@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="padding-bottom: 10px">Сите резервации</h1>
+    {% if not finished %}
+        <h1 style="padding-bottom: 10px">Сите резервации</h1>
+    {% else %}
+        <h1 style="padding-bottom: 10px">Завршени резервации</h1>
+    {% endif %}
     <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b6' %}">Б6</a>
     <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b7' %}">Б7</a>
     <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b8' %}">Б8</a>
@@ -12,8 +16,10 @@
     <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b14' %}">Б14</a>
     <a class="btn btn-outline-secondary-custom m-1" href="{% url 'b15' %}">Б15</a>
     <br>
-    <a class="btn btn-secondary m-1" href="{% url 'list' %}">Сите резервации</a>
+    <a class="btn btn-secondary m-1" id="list" href="{% url 'list' %}">Сите резервации</a>
     <a class="btn btn-success m-1" href="{% url 'add' %}">Нова резервација</a>
+    <a class="btn btn-outline-secondary-custom m-1" id="listFinished" href="{% url 'finished' %}">Завршени резервации</a>
+
     <hr>
     {% for r in allReservations %}
         <div class="listItem">
@@ -52,9 +58,10 @@
                 {% csrf_token %}
                 <button class="btn btn-warning" type="submit">Измени</button>
             </form>
-            <form onsubmit="return confirm('Избриши ја резервацијата?');" style="display: inline-block;" action="{% url 'delete' r.id %}" method="POST">
+            <form onsubmit="return confirm('Избриши ја резервацијата?');" style="display: inline-block;"
+                  action="{% url 'delete' r.id %}" method="POST">
                 {% csrf_token %}
-                <button  class="btn btn-danger" type="submit">Избриши</button>
+                <button class="btn btn-danger" type="submit">Избриши</button>
             </form>
             <br>
             <span class="madeBy">Последна измена од: <u>{{ r.madeBy }}</u>, {{ r.dateOfReservation }}</span>
@@ -64,4 +71,11 @@
 
 
 
+    {% if finished %}
+        <script>
+            document.getElementById("list").classList.remove('btn-secondary')
+            document.getElementById("list").classList.add('btn-outline-secondary-custom')
+            document.getElementById("listFinished").classList.add('btn-secondary')
+        </script>
+    {% endif %}
 {% endblock %}
